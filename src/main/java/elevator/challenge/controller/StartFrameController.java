@@ -5,7 +5,7 @@ import elevator.challenge.model.Floor;
 import lombok.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
+import java.util.*;
 import javax.swing.*;
 
 @Getter
@@ -61,9 +61,13 @@ public class StartFrameController implements ActionListener {
 
     /*The elevator has non-linear motion. It is supposed to go up/down from elevatorsFloor to the currentFloor
     and then back down/up to destinationFloor.*/
-
-    private Elevator getNonLinearElevatorMotion (){
+    private Elevator getNonLinearElevatorMotion () {
         Elevator elevator = new Elevator(elevatorsFloor, (new Floor(elevatorsFloor, currentFloor)));
+        elevator.getElevatorsMotion();
+        System.out.println("Current floor: " + currentFloor);
+        elevator = new Elevator(currentFloor, (new Floor(currentFloor, destinationFloor)));
+        elevator.getElevatorsMotion();
+        elevator.setAvailability(false);
         return elevator;
     }
 
@@ -71,6 +75,8 @@ public class StartFrameController implements ActionListener {
     and then continue to destinationFloor.*/
     private Elevator getLinearElevatorMotion () {
         Elevator elevator = new Elevator(elevatorsFloor, new Floor(currentFloor, destinationFloor));
+        elevator.getElevatorsMotion();
+        elevator.setAvailability(false);
         return elevator;
     }
 }
